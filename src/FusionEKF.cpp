@@ -49,6 +49,15 @@ FusionEKF::FusionEKF() {
               0, 0, 1, 0,
               0, 0, 0, 1;
 
+  //TODO Remove!
+  /*
+  VectorXd x_ = VectorXd(4);
+  MatrixXd P_ = MatrixXd(4, 4);
+  H_, R_, Q_;
+  P_ << 0, 0, 0, 0;
+  ekf_.Init(x_, P_, F_, H_, R_, Q_);
+  */
+
   noise_ax = 9.0;
   noise_ay = 9.0;
 
@@ -75,24 +84,31 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     // first measurement
     cout << "EKF: ";
     ekf_.x_ = VectorXd(4);
+    float px = 0;
+    float py = 0;
 
     if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
       /**
       Convert radar from polar to cartesian coordinates and initialize state.
       */
-      
+      float rho = measurement_pack.raw_measurements_[0];
+      float phi = measurement_pack.raw_measurements_[1];
+
+      px = rho * cos(phi);
+      py = rho * sin(phi);
       
     }
     else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
       /**
        Initialize state.
-       VectorXd x_;
-       MatrixXd P_, F_, H_, R_, Q_;
-       P_ << 0, 0, 0, 0;
-       ekf_.Init(x_, P_, F_, H_, R_, Q_);
        */
-      ekf_.x_ << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 0, 0;
+      px = measurement_pack.raw_measurements_[0];
+      py = measurement_pack.raw_measurements_[1];
     }
+    
+    // As described in the Tips and Tricks section the state variable velocity can not be initialized 
+    ekf_.x_ << px, py, 0, 0;
+    
     // initialize process covariance matrix
     ekf_.P_ = MatrixXd(4,4);
     ekf_.P_ << 1, 0, 0, 0,
