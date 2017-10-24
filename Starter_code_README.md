@@ -1,11 +1,5 @@
-# Udacity Project 6: Extended Kalman Filter
-[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
-
-The goal of this project is to use kalman filter equations to track a bicycle using RADAR and LIDAR measurements.
-Because of the characteristics of RADAR and LIDAR sensor data I had to use standard Kalman filter equations as well as Extended Kalman Filter equations.
-
-### Basic principle
-The basic working principle of a Kalman filter is to track the state of an object using state and the uncertainty of this state. 
+# Extended Kalman Filter Project Starter Code
+Self-Driving Car Engineer Nanodegree Program
 
 In this project you will utilize a kalman filter to estimate the state of a moving object of interest with noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower that the tolerance outlined in the project rubric. 
 
