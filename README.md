@@ -5,9 +5,9 @@ The goal of this project is to use kalman filter equations to track a bicycle us
 Because of the characteristics of RADAR and LIDAR sensor data I had to use standard Kalman filter equations as well as Extended Kalman Filter equations.
 
 ### Basic principle
-The basic working principle of a Kalman filter is to track the state of an object using state and the uncertainty of this state. 
+The basic working principle of a Kalman filter is to track the state of an object using state and the uncertainty of this state. Then, at some point, a new sensor measurement arrives, again with a certain uncertainty. 
+To update our state with the new measurement, we first do a prediction of what the state should be like at the given point in time. Then we weigth the prediction and the sensor measurement by their distinct uncertaincy. If the measurement is very uncertain, the predicted state is weighted higher and vise versa. 
 
-In this project you will utilize a kalman filter to estimate the state of a moving object of interest with noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower that the tolerance outlined in the project rubric. 
 
 This project involves the Term 2 Simulator which can be downloaded [here](https://github.com/udacity/self-driving-car-sim/releases)
 
