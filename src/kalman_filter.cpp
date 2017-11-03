@@ -42,17 +42,8 @@ void KalmanFilter::Update(const VectorXd &z)
   // update equations as in lectures
   VectorXd z_pred = H_ * x_;
   VectorXd y = z - z_pred;
-  MatrixXd Ht = H_.transpose();
-  MatrixXd S = H_ * P_ * Ht + R_;
-  MatrixXd Si = S.inverse();
-  MatrixXd PHt = P_ * Ht;
-  MatrixXd K = PHt * Si;
 
-  //new estimate equations as in lectures
-  x_ = x_ + (K * y);
-  long x_size = x_.size();
-  MatrixXd I = MatrixXd::Identity(x_size, x_size);
-  P_ = (I - K * H_) * P_;
+  KalmanFilter::UpdateCommon(y);
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd &z)
@@ -72,6 +63,13 @@ void KalmanFilter::UpdateEKF(const VectorXd &z)
   float theta = std::atan2(py, px);
   float rho_dot = (px * vx + py * vy) / rho;
 
+  //handling if px and py are near zero
+  if (px < 0.001 && py < 0.001)
+    {
+    float theta = 0;
+    float rho_dot = 0;
+    }
+ 
   // cartesian state vector
   VectorXd z_pred = VectorXd(3);
   z_pred << rho, theta, rho_dot;
@@ -92,17 +90,22 @@ void KalmanFilter::UpdateEKF(const VectorXd &z)
 
   // Debug output
   //std::cout << z[1] << "  " << theta << "  y: " << y[1] << std::endl;
+  KalmanFilter::UpdateCommon(y);
 
+}
+
+void KalmanFilter::UpdateCommon(const VectorXd &y)
+{
+  // use common measurement update for linear and EKF approach to keep it DRY
   // measurement update as in lectures
   MatrixXd Ht = H_.transpose();
-  MatrixXd S = H_ * P_ * Ht + R_;
-  MatrixXd Si = S.inverse();
   MatrixXd PHt = P_ * Ht;
+  MatrixXd S = H_ * PHt + R_;
+  MatrixXd Si = S.inverse();
   MatrixXd K = PHt * Si;
 
-  //new estimate as in lectures
+  //new estimate equations as in lectures
   x_ = x_ + (K * y);
-  // TODO: mode identity matrix to initialization
   long x_size = x_.size();
   MatrixXd I = MatrixXd::Identity(x_size, x_size);
   P_ = (I - K * H_) * P_;
