@@ -4,6 +4,14 @@
 The goal of this project is to use kalman filter equations to track a bicycle using RADAR and LIDAR measurements.
 Because of the characteristics of RADAR and LIDAR sensor data I had to use standard Kalman filter equations as well as Extended Kalman Filter equations.
 
+In the end I was able to achieve a RMSE of:
+| State | RMSE   |
+|-------|--------|
+| X     | 0.0973 |
+| Y     | 0.0855 |
+| VX    | 0.4513 |
+| VY    | 0.4399 |
+
 Project video: (Youtube link)
 
 [![Project track](https://github.com/stefancyliax/CarND-Extended-Kalman-Filter-Project/raw/master/output_images/project_video.gif)](https://www.youtube.com/watch?v=ONBwEsQtf_w)
@@ -11,12 +19,12 @@ Project video: (Youtube link)
 ### Basic principle
 
 The basic working principle of a Kalman filter is to track the state of an object using state and the uncertainty of this state. Then, at some point, a new sensor measurement arrives, again with a certain uncertainty.
-To update our state with the new measurement, we first do a prediction of what the state should be like at the given point in time. Then we weight the prediction and the sensor measurement by their distinct uncertaincy. If the measurement is very uncertain, the predicted state is weighted higher and vise versa.
-This allows for an algorithm that combines serveral noisy measurements and arrive gradually at an accurate state.
+To update our state with the new measurement, we first do a prediction of what the state should be like at the given point in time. Then we weight the prediction and the sensor measurement by their distinct uncertainty. If the measurement is very uncertain, the predicted state is weighted higher and vise versa.
+This allows for an algorithm that combines several noisy measurements and arrive gradually at an accurate state.
 
 ### Project Approach
 
-The starter code was extensive and set the basic structure of the programm. This was very welcome since this is the first C++ project in the SDC Nanodegree. Additionally the [simulator](https://github.com/udacity/self-driving-car-sim/releases) made a comeback for term 2.
+The starter code was extensive and set the basic structure of the program. This was very welcome since this is the first C++ project in the SDC Nanodegree. Additionally the [simulator](https://github.com/udacity/self-driving-car-sim/releases) made a comeback for term 2.
 
 Most of the code needed to finish the project was provided in the lessons, so that the project was no big challenge.
 
