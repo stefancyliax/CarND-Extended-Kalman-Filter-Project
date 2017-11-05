@@ -5,6 +5,7 @@ The goal of this project is to use kalman filter equations to track a bicycle us
 Because of the characteristics of RADAR and LIDAR sensor data I had to use standard Kalman filter equations as well as Extended Kalman Filter equations.
 
 In the end I was able to achieve a RMSE of:
+
 | State | RMSE   |
 |-------|--------|
 | X     | 0.0973 |
